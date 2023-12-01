@@ -78,7 +78,7 @@ export default function Carousel() {
         <AnimatePresence>
           <div className="relative">
             <motion.div
-              className="bg-slate-300"
+              className="overflow-hidden rounded-xl bg-slate-300 drop-shadow-lg"
               key={crypto.randomUUID()}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -99,17 +99,16 @@ export default function Carousel() {
             </motion.div>
           </div>
         </AnimatePresence>
-
         <div
           className="mt-2 flex items-center justify-between"
           onMouseEnter={stopAutoplay}
           onMouseLeave={resumeAutoplay}
         >
           <button onClick={prev}>
-            <ArrowLeftCircleIcon className="h-8 w-8" />
+            <ArrowLeftCircleIcon className="h-8 w-8 drop-shadow-lg" />
           </button>
           <button onClick={next}>
-            <ArrowRightCircleIcon className="h-8 w-8" />
+            <ArrowRightCircleIcon className="h-8 w-8 drop-shadow-lg" />
           </button>
         </div>
       </div>
