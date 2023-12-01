@@ -35,10 +35,22 @@ export default function Carousel() {
   // useState for the autoplayOn (to be toggled when user mouseover)
   const [autoplayOn, setAutoplayOn] = useState(true);
 
+  const next = () => {
+    setImageIndex(
+      imageIndex + 1 > images.length - 1 ? 0 : imageIndex + 1,
+    );
+  }
+
+  const prev = () => {
+    setImageIndex(
+      imageIndex - 1 < 0 ? images.length - 1 : imageIndex - 1,
+    );
+  }
+
   const startAutoPlay = () => {
     setAutoplay(
       setTimeout(() => {
-        setImageIndex(imageIndex + 1 > images.length - 1 ? 0 : imageIndex + 1);
+        next()
         setAutoplayOn(!autoplayOn);
       }, 2000),
     );
@@ -65,12 +77,16 @@ export default function Carousel() {
     };
   }, [autoplayOn]);
 
+  
+
   return (
     <section className="grid min-h-[100dvh] place-items-center px-4">
       <div>
         <div className='relative'>
             <p className='absolute top-0 text-gray-600 mix-blend-normal  z-10 p-5 text-7xl font-bold'>{imageIndex+1}</p>
           <img
+         
+            onWheel={(event) => event.deltaY < 0 ? prev() : next()}
             className="rounded-lg"
             onMouseEnter={stopAutoplay}
             onMouseLeave={resumeAutoplay}
@@ -84,20 +100,12 @@ export default function Carousel() {
           onMouseLeave={resumeAutoplay}
         >
           <button
-            onClick={() =>
-              setImageIndex(
-                imageIndex - 1 < 0 ? images.length - 1 : imageIndex - 1,
-              )
-            }
+            onClick={prev}
           >
             <ArrowLeftCircleIcon className="h-8 w-8" />
           </button>
           <button
-            onClick={() =>
-              setImageIndex(
-                imageIndex + 1 > images.length - 1 ? 0 : imageIndex + 1,
-              )
-            }
+            onClick={next}
           >
             <ArrowRightCircleIcon className="h-8 w-8" />
           </button>
