@@ -81,6 +81,12 @@ export default function Carousel() {
         case 'ArrowRight':
             next();
             break;
+        case 'ArrowUp':
+            prev();
+            break;
+        case 'ArrowDown':
+            next();
+            break;
         default:
             break;
         }
