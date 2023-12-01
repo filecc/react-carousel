@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowRightCircleIcon,
   ArrowLeftCircleIcon,
@@ -36,21 +37,17 @@ export default function Carousel() {
   const [autoplayOn, setAutoplayOn] = useState(true);
 
   const next = () => {
-    setImageIndex(
-      imageIndex + 1 > images.length - 1 ? 0 : imageIndex + 1,
-    );
-  }
+    setImageIndex(imageIndex + 1 > images.length - 1 ? 0 : imageIndex + 1);
+  };
 
   const prev = () => {
-    setImageIndex(
-      imageIndex - 1 < 0 ? images.length - 1 : imageIndex - 1,
-    );
-  }
+    setImageIndex(imageIndex - 1 < 0 ? images.length - 1 : imageIndex - 1);
+  };
 
   const startAutoPlay = () => {
     setAutoplay(
       setTimeout(() => {
-        next()
+        next();
         setAutoplayOn(!autoplayOn);
       }, 2000),
     );
@@ -66,8 +63,6 @@ export default function Carousel() {
     startAutoPlay();
   };
 
-  
-
   useEffect(() => {
     console.log('starting');
     startAutoPlay();
@@ -77,36 +72,43 @@ export default function Carousel() {
     };
   }, [autoplayOn]);
 
-  
-
   return (
     <section className="grid min-h-[100dvh] place-items-center px-4">
       <div>
-        <div className='relative'>
-            <p className='absolute top-0 text-gray-600 mix-blend-normal  z-10 p-5 text-7xl font-bold'>{imageIndex+1}</p>
-          <img
-         
-            onWheel={(event) => event.deltaY < 0 ? prev() : next()}
-            className="rounded-lg"
-            onMouseEnter={stopAutoplay}
-            onMouseLeave={resumeAutoplay}
-            src={images[imageIndex].src}
-            alt={images[imageIndex].alt}
-          />
-        </div>
+        <AnimatePresence>
+          <div className="relative">
+            <motion.div
+              className="bg-slate-300"
+              key={crypto.randomUUID()}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.3 }}
+            >
+              <p className="absolute top-0 z-10 p-5  text-7xl font-bold text-gray-600 mix-blend-normal">
+                {imageIndex + 1}
+              </p>
+              <motion.img
+                onWheel={(event) => (event.deltaY < 0 ? prev() : next())}
+                className="rounded-lg"
+                onMouseEnter={stopAutoplay}
+                onMouseLeave={resumeAutoplay}
+                src={images[imageIndex].src}
+                alt={images[imageIndex].alt}
+              />
+            </motion.div>
+          </div>
+        </AnimatePresence>
+
         <div
           className="mt-2 flex items-center justify-between"
           onMouseEnter={stopAutoplay}
           onMouseLeave={resumeAutoplay}
         >
-          <button
-            onClick={prev}
-          >
+          <button onClick={prev}>
             <ArrowLeftCircleIcon className="h-8 w-8" />
           </button>
-          <button
-            onClick={next}
-          >
+          <button onClick={next}>
             <ArrowRightCircleIcon className="h-8 w-8" />
           </button>
         </div>
