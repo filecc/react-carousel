@@ -72,8 +72,22 @@ export default function Carousel() {
     };
   }, [autoplayOn]);
 
+  const handleKeyboard = (key: string) => {
+    stopAutoplay()
+    switch (key) {
+        case 'ArrowLeft':
+            prev();
+            break;
+        case 'ArrowRight':
+            next();
+            break;
+        default:
+            break;
+        }
+  }
+
   return (
-    <section className="grid min-h-[100dvh] place-items-center px-4">
+    <section tabIndex={0} onKeyDown={(event) => handleKeyboard(event.key)} className="grid min-h-[100dvh] place-items-center px-4">
       <div>
         <AnimatePresence>
           <div className="relative">
