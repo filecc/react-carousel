@@ -80,15 +80,16 @@ export default function Carousel() {
             <motion.div
               className="overflow-hidden rounded-xl bg-slate-300 drop-shadow-lg"
               key={crypto.randomUUID()}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.3 }}
+              
+              
             >
               <p className="absolute top-0 z-10 p-5  text-7xl font-bold text-gray-600 mix-blend-normal">
                 {imageIndex + 1}
               </p>
               <motion.img
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 onWheel={(event) => (event.deltaY < 0 ? prev() : next())}
                 className="rounded-lg"
                 onMouseEnter={stopAutoplay}
@@ -100,7 +101,7 @@ export default function Carousel() {
           </div>
         </AnimatePresence>
         <div
-          className="mt-2 flex items-center justify-between"
+          className="mt-2 flex items-center justify-between min-w-full"
           onMouseEnter={stopAutoplay}
           onMouseLeave={resumeAutoplay}
         >
